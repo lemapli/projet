@@ -6,8 +6,8 @@ Cette API RESTful permet de jouer au jeu de Puissance 4. Elle inclut l'authentif
 
 ## Membres
 
-- Étudiant 1: Nom Prénom
-- Étudiant 2: Nom Prénom
+- Étudiant 1: Moreau Alexandre
+- Étudiant 2: Mapelli Léna
 - Étudiant 3: Nom Prénom
 
 ## Fonctionnalités
