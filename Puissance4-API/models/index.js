@@ -1,27 +1,27 @@
-module.exports = (sequelize, DataTypes) => {
-  const Move = sequelize.define('Move', {
-    playerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    column: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
+const { Sequelize, DataTypes } = require('sequelize');
+const config = require('../config/config.json')[process.env.NODE_ENV || 'development'];
 
-        min: 0,
-        max: 6
-      }
-    }
-  }, {
-    tableName: 'moves',
-    timestamps: true
-  });
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
-  Move.associate = (models) => {
-    Move.belongsTo(models.Game, { foreignKey: 'gameId' });
+const db = {};
 
-  };
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-  return Move;
-};
+db.User = require('./user')(sequelize, DataTypes);
+db.Game = require('./game')(sequelize, DataTypes);
+db.Move = require('./move')(sequelize, DataTypes);
+db.Board = require('./board')(sequelize, DataTypes);
+
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+module.exports = db;
