@@ -1,0 +1,25 @@
+module.exports = (sequelize, DataTypes) => {
+  const Statistics = sequelize.define('Statistics', {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    gamesPlayed: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    gamesWon: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
+  }, {
+    tableName: 'statistics',
+    timestamps: true
+  });
+
+  Statistics.associate = (models) => {
+    Statistics.belongsTo(models.User, { foreignKey: 'userId' });
+  };
+
+  return Statistics;
+};
